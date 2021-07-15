@@ -9,12 +9,16 @@ part of 'intervall.dart';
 extension SchleusenIntervalCopyWith on SchleusenInterval {
   SchleusenInterval copyWith({
     String? bis,
+    bool? giltFuerRaus,
+    bool? giltFuerRein,
     String? standname,
     String? tuername,
     String? von,
   }) {
     return SchleusenInterval(
       bis: bis ?? this.bis,
+      giltFuerRaus: giltFuerRaus ?? this.giltFuerRaus,
+      giltFuerRein: giltFuerRein ?? this.giltFuerRein,
       standname: standname ?? this.standname,
       tuername: tuername ?? this.tuername,
       von: von ?? this.von,
@@ -51,6 +55,8 @@ SchleusenInterval _$SchleusenIntervalFromJson(Map<String, dynamic> json) {
     standname: json['standname'] as String,
     tuername: json['tuername'] as String,
     von: json['von'] as String,
+    giltFuerRein: json['giltFuerRein'] as bool?,
+    giltFuerRaus: json['giltFuerRaus'] as bool?,
   );
 }
 
@@ -60,6 +66,8 @@ Map<String, dynamic> _$SchleusenIntervalToJson(SchleusenInterval instance) =>
       'tuername': instance.tuername,
       'von': instance.von,
       'bis': instance.bis,
+      'giltFuerRein': instance.giltFuerRein,
+      'giltFuerRaus': instance.giltFuerRaus,
     };
 
 FutterschieberInterval _$FutterschieberIntervalFromJson(

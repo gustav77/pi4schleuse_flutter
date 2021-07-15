@@ -9,6 +9,7 @@ part of 'rfidstand.dart';
 extension RfidstandCopyWith on Rfidstand {
   Rfidstand copyWith({
     List<Dosierer>? dosierer,
+    bool? fullduplex,
     String? id,
     String? ip,
     bool? lichttaster,
@@ -21,6 +22,7 @@ extension RfidstandCopyWith on Rfidstand {
   }) {
     return Rfidstand(
       dosierer: dosierer ?? this.dosierer,
+      fullduplex: fullduplex ?? this.fullduplex,
       id: id ?? this.id,
       ip: ip ?? this.ip,
       lichttaster: lichttaster ?? this.lichttaster,
@@ -118,6 +120,7 @@ Rfidstand _$RfidstandFromJson(Map<String, dynamic> json) {
         ?.map((e) => Dosierer.fromJson(e as Map<String, dynamic>))
         .toList(),
     lichttaster: json['lichttaster'] as bool?,
+    fullduplex: json['fullduplex'] as bool?,
     nachlaufsperre: json['nachlaufsperre'] == null
         ? null
         : Nachlaufsperre.fromJson(
@@ -153,6 +156,7 @@ Map<String, dynamic> _$RfidstandToJson(Rfidstand instance) {
   writeNotNull('futterschieber', instance.futterschieber);
   writeNotNull('nachlaufsperre', instance.nachlaufsperre);
   writeNotNull('lichttaster', instance.lichttaster);
+  writeNotNull('fullduplex', instance.fullduplex);
   writeNotNull('zeitschaltungen', instance.zeitschaltungen);
   writeNotNull('operationmode', instance.operationmode);
   return val;

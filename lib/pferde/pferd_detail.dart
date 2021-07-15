@@ -9,6 +9,7 @@ import 'package:piflutter/models/value_objects/intervall.dart';
 import 'package:piflutter/models/value_objects/tuer.dart';
 import 'package:piflutter/pferde/fuetterung_statistik_liste.dart';
 import 'package:piflutter/pferde/schleusung_statistik_liste.dart';
+import 'package:piflutter/pferde/zutrittsberechtigung_dialog.dart';
 import 'package:piflutter/service/service.dart';
 
 import '../main.dart';
@@ -27,7 +28,8 @@ class _PferdDetailState extends State<PferdDetail> {
   late Pferd horse;
   var rfid_1Ctrl;
   var rfid_2Ctrl;
-
+  var _rein_checked = true;
+  var _raus_checked;
   late FToast fToast;
   @override
   void initState() {
@@ -203,7 +205,9 @@ class _PferdDetailState extends State<PferdDetail> {
                       ],
                     ),
                     if (has(staende: snapshot.data, typ: 'futterschieber'))
-                      Divider(),
+                      Divider(
+                        height: 40.0,
+                      ),
                     if (has(staende: snapshot.data, typ: 'futterschieber'))
                       ElevatedButton(
                           onPressed: () async {
@@ -260,13 +264,27 @@ class _PferdDetailState extends State<PferdDetail> {
                               );
                             }),
                       ),
-                    if (has(staende: snapshot.data, typ: 'tueren')) Divider(),
+                    if (has(staende: snapshot.data, typ: 'tueren'))
+                      Divider(
+                        height: 40,
+                      ),
                     if (has(staende: snapshot.data, typ: 'tueren'))
                       ElevatedButton(
                           onPressed: () async {
-                            var fb = await createSchleusenZutrittDialog(
-                                context, snapshot.data);
-
+                            //var fb = await createSchleusenZutrittDialog(
+                            //    context, snapshot.data);
+                            var fb = await showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ZutrittsberechtigungDialog(
+                                  staende: snapshot.data,
+                                  fullduplex: has(
+                                      staende: snapshot.data,
+                                      typ: 'fullduplex'),
+                                );
+                              },
+                            );
                             if (fb != null) {
                               setState(() {
                                 if (horse.intervalle == null) {
@@ -289,6 +307,16 @@ class _PferdDetailState extends State<PferdDetail> {
                                 ? horse.intervalle!.length
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
+                              var rein = horse.intervalle![index].giltFuerRein;
+                              var fuerRein = '';
+                              var fuerRaus = '';
+                              var raus = horse.intervalle![index].giltFuerRaus;
+                              if (rein != null && rein == true) {
+                                fuerRein = ' hinein';
+                              }
+                              if (raus != null && raus == true) {
+                                fuerRaus = ' heraus';
+                              }
                               return ListTile(
                                 trailing: IconButton(
                                     icon: Icon(Icons.delete),
@@ -310,7 +338,9 @@ class _PferdDetailState extends State<PferdDetail> {
                                 subtitle: Text(
                                     horse.intervalle![index].standname +
                                         ' / ' +
-                                        horse.intervalle![index].tuername),
+                                        horse.intervalle![index].tuername +
+                                        fuerRein +
+                                        fuerRaus),
                               );
                             }),
                       ),
@@ -454,6 +484,14 @@ class _PferdDetailState extends State<PferdDetail> {
           return true;
         }
       }
+    }
+    if (typ == 'fullduplex') {
+      for (var stand in staende) {
+        if (stand.fullduplex != null && stand.fullduplex == true) {
+          return true;
+        }
+      }
+      return false;
     }
     return false;
   }
@@ -757,6 +795,7 @@ class _PferdDetailState extends State<PferdDetail> {
         builder: (context) {
           var von;
           var bis;
+          var reinChecked = true;
           Tuer? _selectedTuer;
 
           return AlertDialog(
@@ -801,6 +840,15 @@ class _PferdDetailState extends State<PferdDetail> {
                     decoration: InputDecoration(
                         labelText: 'Ende Uhrzeit', hintText: 'hh:mm'),
                   ),
+                  Checkbox(
+                      //tristate: true,
+                      //title: Text("gilt für rein"),
+                      value: reinChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          reinChecked = value!;
+                        });
+                      })
                 ],
               ),
             ),

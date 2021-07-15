@@ -10,11 +10,15 @@ class SchleusenInterval {
   String tuername;
   String von;
   String bis;
+  bool? giltFuerRein;
+  bool? giltFuerRaus;
   SchleusenInterval(
       {required this.bis,
       required this.standname,
       required this.tuername,
-      required this.von});
+      required this.von,
+      this.giltFuerRein,
+      this.giltFuerRaus});
 
   factory SchleusenInterval.fromJson(Map<String, dynamic> json) =>
       _$SchleusenIntervalFromJson(json);

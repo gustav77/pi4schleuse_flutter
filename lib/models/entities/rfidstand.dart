@@ -20,6 +20,7 @@ class Rfidstand {
   List<Futterschieber>? futterschieber;
   Nachlaufsperre? nachlaufsperre;
   bool? lichttaster;
+  bool? fullduplex;
   List<SchleusenInterval>? zeitschaltungen;
   String? operationmode;
   Rfidstand(
@@ -29,6 +30,7 @@ class Rfidstand {
       required this.name,
       this.dosierer,
       this.lichttaster,
+      this.fullduplex,
       this.nachlaufsperre,
       this.operationmode,
       this.tueren,
