@@ -43,7 +43,7 @@ class FutterschieberWidget extends StatelessWidget {
                         service.closeFutterschieber(stand.ip);
                       },
                       child: Text(
-                        'Schliessen',
+                        'Schließen',
                       )),
                 )
               ],

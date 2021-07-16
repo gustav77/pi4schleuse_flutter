@@ -123,7 +123,7 @@ class _TuerWidgetState extends State<TuerWidget> {
                         openTime = value;
                       },
                       decoration: InputDecoration(
-                          labelText: 'Wartezeit vor dem Schliessen in Sekunden',
+                          labelText: 'Wartezeit vor dem Schließen in Sekunden',
                           hintText: 'Zeit bevor die Tür wieder schliesst'),
                     ),
                   ],
@@ -202,7 +202,7 @@ class _TuerWidgetState extends State<TuerWidget> {
                             }
                           : null,
                       child: Text(
-                        'Schliessen',
+                        'Schließen',
                       )),
                 )
               ],

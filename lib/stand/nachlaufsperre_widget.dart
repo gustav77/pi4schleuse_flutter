@@ -118,7 +118,7 @@ class NachlaufsperreWidget extends StatelessWidget {
                         service.closeNls(stand.ip);
                       },
                       child: Text(
-                        'Schliessen',
+                        'Schließen',
                       )),
                 )
               ],
