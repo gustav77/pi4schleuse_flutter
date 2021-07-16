@@ -24,7 +24,7 @@ class _ZutrittsberechtigungDialogState
   List<Tuer> doors = [];
   var von;
   var bis;
-  var reinChecked = false;
+  var reinChecked = true;
   var rausChecked = false;
 
   @override
@@ -102,16 +102,21 @@ class _ZutrittsberechtigungDialogState
                     setState(() {
                       reinChecked = value!;
                     });
-                  }),
-            CheckboxListTile(
-                tristate: false,
-                title: Text("Gilt für raus"),
-                value: rausChecked,
-                onChanged: (value) {
-                  setState(() {
-                    rausChecked = value!;
-                  });
-                })
+                  })
+            else
+              Container(),
+            if (widget.fullduplex)
+              CheckboxListTile(
+                  tristate: false,
+                  title: Text("Gilt für raus"),
+                  value: rausChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      rausChecked = value!;
+                    });
+                  })
+            else
+              Container()
           ],
         ),
       ),
